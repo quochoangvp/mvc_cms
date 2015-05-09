@@ -8,9 +8,13 @@
     $(document).ready(function() {
         $('#button_load_more').hide();
         $('#homepage_articles').html('<div class="loading_bar"></div>');
-        $.post('<?php echo BASE_URL.'index/lastest_articles';?>', {  }, function(data) {
-            $('#homepage_articles').html(data);
-            $('#button_load_more').show();
+        $.post('<?php echo BASE_URL . 'home/lastest_articles';?>', {  }, function(data) {
+            if ($.trim(data).length != 0) {
+                $('#homepage_articles').html(data);
+                $('#button_load_more').show();
+            } else{
+                $('#homepage_articles').html('<p class="text-center text-danger">Không có bài đăng nào!</p>');
+            };
         });
 
         $('#load_more').click(function(event) {
@@ -18,8 +22,8 @@
             var page = $(this).val();
             $('#button_load_more').hide();
             $('#load_status').addClass('loading_bar');
-            $.post('<?php echo BASE_URL.'index/lastest_articles/';?>'+page, { }, function(data) {
-                if (data.length > 1) {
+            $.post('<?php echo BASE_URL . 'home/lastest_articles/';?>'+page, { }, function(data) {
+                if ($.trim(data).length != 0) {
                     $('#homepage_articles').append(data);
                     $('#button_load_more').show();
                     $('#load_more').val(parseInt(page)+1);

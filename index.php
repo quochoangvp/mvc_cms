@@ -109,7 +109,7 @@ define('DB_TABLE', 'db_cms');
  * @param  string $className Tên class
  */
 function __autoload($className) {
-	$path = LIBSPATH . $className . '.php';
+	$path = LIBSPATH . strtolower($className) . '.php';
 
 	if (file_exists($path) && is_file($path)) {
 		require_once $path;
